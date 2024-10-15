@@ -51,14 +51,14 @@ jobs:
       # Build and push Docker image for Spring Boot (backend)
       - name: Build and push backend Docker image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/spring-backend:latest ./backend
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-backend:latest
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest ./backend
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
       # Build and push Docker image for React (frontend)
       - name: Build and push frontend Docker image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/react-frontend:latest -f ./frontend/Dockerfile.frontend ./frontend
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/react-frontend:latest
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest -f ./frontend/Dockerfile.frontend ./frontend
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
 
   deploy:
     runs-on: ubuntu-latest

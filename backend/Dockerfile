@@ -5,7 +5,7 @@ FROM openjdk:11-jdk-slim
 WORKDIR /app
 
 # Copy the application JAR file into the container
-COPY target/backend.jar /app/backend.jar
+COPY target/backend-0.0.1-SNAPSHOT.jar /app/backend.jar
 
 # Expose port 8080
 EXPOSE 8080

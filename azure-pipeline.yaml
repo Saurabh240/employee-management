@@ -46,6 +46,15 @@ jobs:
   displayName: "Deploy to AKS"
   dependsOn: Build_And_Push_Images
   steps:
+    - task: AzureKeyVault@2
+      inputs:
+      azureSubscription: 'your-service-connection'
+      KeyVaultName: 'your-key-vault-name'
+      SecretsFilter: '*'
+      RunAsPreJob: true
+
+    - script: echo $(your-secret-name)
+      displayName: 'Print secret from Azure Key Vault'
     - task: KubectlInstaller@0
       displayName: Install Kubectl
 
@@ -70,9 +79,9 @@ jobs:
         namespace: '$(kubernetesNamespace)'
         command: 'apply'
         useConfigurationFile: true
-        configuration: './k8s/react-deployment.yaml'  # Path to Kubernetes manifest for React
+        configuration: './k8s/deployment.yaml'  # Path to Kubernetes manifest for React
         arguments: |
-          -f ./k8s/react-service.yaml
+          -f ./k8s/service.yaml
 
     # Deploy the Spring Boot App
     - task: Kubernetes@1
@@ -85,6 +94,6 @@ jobs:
         namespace: '$(kubernetesNamespace)'
         command: 'apply'
         useConfigurationFile: true
-        configuration: './k8s/springboot-deployment.yaml'  # Path to Kubernetes manifest for Spring Boot
+        configuration: './k8s/deployment.yaml'  # Path to Kubernetes manifest for Spring Boot
         arguments: |
-          -f ./k8s/springboot-service.yaml
+          -f ./k8s/service.yaml

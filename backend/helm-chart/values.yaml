@@ -1,0 +1,11 @@
+# Global values
+image:
+  backend: saurabh896/spring-boot-app:latest
+replicaCount:
+  backend: 1
+
+# Service types
+service:
+  backend:
+    type: LoadBalancer
+    port: 8080

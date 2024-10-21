@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+### Helm Install
+helm upgrade --install frontend ./helm-chart --namespace default
+
+## To override values.yaml
+- name: Deploy with Custom Values
+  run: helm upgrade --install frontend ./helm-chart --namespace default --set image.react=my-new-image
+
+kubectl get services
+
+minikube service frontend-service

@@ -1,0 +1,4 @@
+apiVersion: v2
+name: frontend
+description: A Helm chart for my React frontend
+version: 0.1.0

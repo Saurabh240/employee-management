@@ -1,0 +1,11 @@
+# Global values
+image:
+  react: saurabh896/react-app:latest
+replicaCount:
+  react: 1
+
+# Service types
+service:
+  react:
+    type: LoadBalancer
+    port: 80

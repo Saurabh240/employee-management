@@ -12,7 +12,7 @@ pipeline {
                     sh '''
                         mvn clean verify sonar:sonar \
                         -Dsonar.projectKey=emp-mgmt-project_emp-mgmt-repo_AZMKX6caq0wq_ekJzBXQ \
-                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.host.url=http://sonarqube:9000 \
                         -Dsonar.login=sqp_2de573bd5f8d3446eab79b88c26fc94d6ac56a95
                     '''
                 }

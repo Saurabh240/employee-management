@@ -6,6 +6,7 @@ pipeline {
     stages {
         stage('SonarQube Analysis') {
             steps {
+                dir('backend') {
                 withSonarQubeEnv('SonarQube') {
                     sh 'echo Running SonarQube analysis'
                     sh '''
@@ -15,6 +16,7 @@ pipeline {
                         -Dsonar.login=sqp_2de573bd5f8d3446eab79b88c26fc94d6ac56a95
                     '''
                 }
+              }
             }
         }
     }

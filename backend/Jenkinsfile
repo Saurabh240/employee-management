@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+    stages {
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'echo Running SonarQube analysis'
+                    mvn clean verify sonar:sonar `-D"sonar.projectKey=emp-mgmt-project_emp-mgmt-repo_AZMKX6caq0wq_ekJzBXQ" ` -D"sonar.host.url=http://localhost:9000" ` -D"sonar.login=sqp_2de573bd5f8d3446eab79b88c26fc94d6ac56a95"
+                }
+            }
+        }
+    }
+}

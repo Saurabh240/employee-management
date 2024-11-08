@@ -1,0 +1,4 @@
+environment:
+  sonarqubeHost: "http://localhost:9000"
+  sonarqubeToken: "sonarqube_token"
+  projectKey: "emp-mgmt-project_emp-mgmt-repo_AZMKX6caq0wq_ekJzBXQ"

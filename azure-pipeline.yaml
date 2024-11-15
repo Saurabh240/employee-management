@@ -7,10 +7,10 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  acrName: 'your-acr-name' # Name of Azure Container Registry
-  imageTag: $(Build.BuildId) # Unique tag for the Docker images
-  aksResourceGroup: 'your-aks-resource-group'  # Resource group containing the AKS cluster
-  aksClusterName: 'your-aks-cluster'  # Name of the AKS cluster
+  acrName: 'vinayACRregistry' # Name of Azure Container Registry
+  imageTag: latest # Unique tag for the Docker images
+  aksResourceGroup: 'ProdResourceGroup'  # Resource group containing the AKS cluster
+  aksClusterName: 'vinayAKScluster2'  # Name of the AKS cluster
   kubernetesNamespace: 'default'  # Namespace in AKS (use 'default' if not set)
 
 jobs:
@@ -45,16 +45,16 @@ jobs:
 - job: Deploy_To_AKS
   displayName: "Deploy to AKS"
   dependsOn: Build_And_Push_Images
-  steps:
-    - task: AzureKeyVault@2
-      inputs:
-      azureSubscription: 'your-service-connection'
-      KeyVaultName: 'your-key-vault-name'
-      SecretsFilter: '*'
-      RunAsPreJob: true
+  # steps:
+  #   - task: AzureKeyVault@2
+  #     inputs:
+  #     azureSubscription: 'your-service-connection'
+  #     KeyVaultName: 'your-key-vault-name'
+  #     SecretsFilter: '*'
+  #     RunAsPreJob: true
 
-    - script: echo $(your-secret-name)
-      displayName: 'Print secret from Azure Key Vault'
+  #   - script: echo $(your-secret-name)
+  #     displayName: 'Print secret from Azure Key Vault'
     - task: KubectlInstaller@0
       displayName: Install Kubectl
 
@@ -62,7 +62,7 @@ jobs:
     - task: AzureCLI@2
       displayName: "Set AKS Context"
       inputs:
-        azureSubscription: 'your-azure-subscription'
+        azureSubscription: 'Azure subscription 1(c7d2ca6c-69ed-45c7-a1cb-aad24f468f60)'
         scriptType: bash
         scriptLocation: inlineScript
         inlineScript: |
@@ -73,7 +73,7 @@ jobs:
       displayName: "Deploy React App to AKS"
       inputs:
         connectionType: 'Azure Resource Manager'
-        azureSubscription: 'your-azure-subscription'
+        azureSubscription: 'Azure subscription 1(c7d2ca6c-69ed-45c7-a1cb-aad24f468f60)'
         azureResourceGroup: '$(aksResourceGroup)'
         kubernetesCluster: '$(aksClusterName)'
         namespace: '$(kubernetesNamespace)'
@@ -88,7 +88,7 @@ jobs:
       displayName: "Deploy Spring Boot App to AKS"
       inputs:
         connectionType: 'Azure Resource Manager'
-        azureSubscription: 'your-azure-subscription'
+        azureSubscription: 'Azure subscription 1(c7d2ca6c-69ed-45c7-a1cb-aad24f468f60)'
         azureResourceGroup: '$(aksResourceGroup)'
         kubernetesCluster: '$(aksClusterName)'
         namespace: '$(kubernetesNamespace)'

@@ -67,30 +67,37 @@ jobs:
       # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v2
-
+  
       # Set up kubectl for Azure AKS
       - name: Set up kubectl
         uses: azure/setup-kubectl@v1
         with:
           version: 'v1.22.0'
-
-      # - name: Set up Helm
-      #   uses: azure/setup-helm@v1
-
-      # Set up Azure authentication
+  
+      # Authenticate with Azure
       - name: Azure login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      # Deploy to Azure AKS using k8s manifests
-      - name: Deploy to AKS
+  
+      # Replace $tag variable in Kubernetes manifests for frontend
+      - name: Substitute frontend image tag in Kubernetes manifests
         run: |
-          kubectl apply -f ./k8s/deployment.yaml
-          kubectl apply -f ./k8s/service.yaml
-
-      # - name: Set kubeconfig
-      #   run: az aks get-credentials --resource-group <resource-group-name> --name <aks-cluster-name>
-
-      # - name: Deploy to AKS using Helm
-      #   run: helm upgrade --install my-app ./helm-chart --namespace default    
+          sed -i 's/\$(imageTag)/latest/g' ./frontend/k8s/deployment.yaml
+  
+      # Replace $tag variable in Kubernetes manifests for backend
+      - name: Substitute backend image tag in Kubernetes manifests
+        run: |
+          sed -i 's/\$(imageTag)/latest/g' ./backend/k8s/deployment.yaml
+  
+      # Deploy the React (frontend) app to AKS
+      - name: Deploy frontend to AKS
+        run: |
+          kubectl apply -f ./frontend/k8s/deployment.yaml
+          kubectl apply -f ./frontend/k8s/service.yaml
+  
+      # Deploy the Spring Boot (backend) app to AKS
+      - name: Deploy backend to AKS
+        run: |
+          kubectl apply -f ./backend/k8s/deployment.yaml
+          kubectl apply -f ./backend/k8s/service.yaml   
